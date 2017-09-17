@@ -1,6 +1,6 @@
 
   public class RunnableProxy
-      implements Runnable
+    implements Runnable
   {
 
     protected Runnable delegate;
@@ -11,6 +11,24 @@
 
     public void run() {
       this.delegate.run();
+    }
+  }
+
+
+  public class BenchmarkingRunnable
+    extends RunnableProxy
+  {
+
+    public BenchmarkingRunnable(Runnable delegate) {
+      super(delegate);
+    }
+
+    public void run() {
+      long starTime = System.nanoTime();
+      this.delegate.run();
+      long endTime = System.nanoTime();
+
+      System.out.println("time: " + (endTime-startTime) + " ns");
     }
   }
 
